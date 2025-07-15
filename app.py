@@ -106,4 +106,3 @@ def send_email():
         return redirect(url_for("login_route"))
     else:
         return redirect(url_for("login_route"))
-app.run(debug=True)
