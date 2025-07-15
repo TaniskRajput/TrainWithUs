@@ -7,6 +7,7 @@ app = Flask(__name__, template_folder="frontend")
 app.secret_key = "your_secret_key"  # Needed for session management
 
 @app.route("/")
+
 def home():
     if 'user' in session:
         return render_template("index.html")  # Homepage for logged-in users
