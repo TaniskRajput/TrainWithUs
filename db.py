@@ -1,5 +1,8 @@
+import os
 import psycopg2 
-DATABASE_URL = "postgres://avnadmin:AVNS_l5P8Q418hHL3-xYjULw@pg-324e2c81-trainswithus.f.aivencloud.com:22527/defaultdb?sslmode=require"
+from dotenv import load_dotenv
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 def get_connection():
     return psycopg2.connect(DATABASE_URL)
 
