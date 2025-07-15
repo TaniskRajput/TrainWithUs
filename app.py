@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
-from db import signup, fetch_user_by_email
+from db import signup, fetch_user_by_email,updatePass
 from werkzeug.security import check_password_hash
 from send import send_mail
 
@@ -107,3 +107,45 @@ def send_email():
         return redirect(url_for("login_route"))
     else:
         return redirect(url_for("login_route"))
+@app.route("/change_password",methods=["POST"])
+def change_password():
+    if 'changepassword' in session:
+        otp1=str(request.form.get("otp1"))
+        otp2=str(request.form.get("otp2"))
+        otp3=str(request.form.get("otp3"))
+        otp4=str(request.form.get("otp4"))
+        otp5=str(request.form.get("otp5"))
+        otp6=str(request.form.get("otp6"))
+        otp=otp1+otp2+otp3+otp4+otp5+otp6
+        print(otp)
+        password=request.form.get("password")
+        print(password)
+        if int(otp)==session['changepassword'][0]:
+            print(session["changepassword"])
+            updatePass(session['changepassword'][1],password)
+            return redirect(url_for("login_route"))
+        else:
+            return "Wrong Credentials"
+        
+@app.route("/forgot_password" , methods=["POST","GET"])
+def forgot_password():
+    if request.method == "POST":
+        email=request.form.get("email")
+        user=fetch_user_by_email(email)
+        if user :
+            print(user[1])
+            import random
+            otp=random.randint(100000,999999)
+            session['changepassword'] = [otp,email]
+            send_mail(str(otp),email,user[1])
+            return render_template("forgot2.html")
+        else:
+            return "Email Not Found"
+    return render_template("forgot.html")
+ 
+
+
+
+#   if password == user[3]:
+#             session['user'] = user[2]
+#             return redirect(url_for("home"))
