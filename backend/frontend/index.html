@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitHome - Home Workouts Without Equipment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>💪TrainWithUs</h2>
+            </div>
+           <div class="nav-menu" id="nav-menu">
+<a href="#home" class="nav-link active" data-section="home">Home</a>
+<a href="#workouts" class="nav-link " data-section="workouts">Workouts</a>
+<a href="#tips" class="nav-link" data-section="tips">Tips</a>
+<a href="#contact" class="nav-link" data-section="contact">Contact</a>
+<a href="/schedule"  id="scheduleLink">Schedule</a>
+  <a href="/logout" class="login-btn">Logout</a>
+</div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Transform Your Body at Home</h1>
+                    <p class="hero-subtitle">No equipment needed. Just you, your determination, and proven workouts.</p>
+                    <div class="quote-container">
+                        <p class="daily-quote" id="daily-quote">Loading inspirational quote...</p>
+                    </div>
+                    <a href="/schedule" class="cta-button">Start Your Journey</a>
+
+                </div>
+                <div class="hero-image">
+                    <div class="placeholder-image">🏃‍♀️</div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Workouts Section -->
+        <section id="workouts" class="section">
+            <div class="container">
+                <h2 class="section-title">Workout Library</h2>
+                <div class="workouts-grid">
+                    <div class="workout-card" data-exercise="push-ups">
+                        <div class="exercise-image"> <button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Push-ups</h3>
+                        <p>Build upper body strength with this classic exercise. Great for chest, shoulders, and triceps.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 10-15 reps</span>
+                            <button class="timer-btn" data-time="60">Start Timer (1 min)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-card" data-exercise="plank">
+                        <div class="exercise-image"> <button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Plank</h3>
+                        <p>Core strengthening exercise that engages your entire midsection and improves stability.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 30-60 sec</span>
+                            <button class="timer-btn" data-time="30">Start Timer (30 sec)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-card" data-exercise="squats">
+                        <div class="exercise-image"><button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Squats</h3>
+                        <p>Lower body powerhouse exercise targeting quads, glutes, and hamstrings.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 15-20 reps</span>
+                            <button class="timer-btn" data-time="90">Start Timer (90 sec)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-card" data-exercise="lunges">
+                        <div class="exercise-image"><button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Lunges</h3>
+                        <p>Unilateral leg exercise that improves balance, strength, and flexibility.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 10 each leg</span>
+                            <button class="timer-btn" data-time="120">Start Timer (2 min)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-card" data-exercise="burpees">
+                        <div class="exercise-image"><button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Burpees</h3>
+                        <p>Full-body cardio exercise that combines squat, plank, and jump movements.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 5-10 reps</span>
+                            <button class="timer-btn" data-time="45">Start Timer (45 sec)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-card" data-exercise="mountain-climbers">
+                        <div class="exercise-image"><button class="tutorial-btn" onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')">
+                                <span class="youtube-icon">📺</span> Tutorial
+                            </button></div>
+                        <h3>Mountain Climbers</h3>
+                        <p>Dynamic cardio exercise that targets core, shoulders, and improves endurance.</p>
+                        <div class="exercise-details">
+                            <span class="duration">3 sets × 20 reps</span>
+                            <button class="timer-btn" data-time="40">Start Timer (40 sec)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timer Modal -->
+            <div class="timer-modal" id="timer-modal">
+                <div class="timer-content">
+                    <h3 id="timer-exercise">Exercise Timer</h3>
+                    <div class="timer-display" id="timer-display">00:30</div>
+                    <div class="timer-controls">
+                        <button class="timer-control-btn" id="start-pause-btn">Start</button>
+                        <button class="timer-control-btn" id="reset-btn">Reset</button>
+                        <button class="timer-control-btn close-btn" id="close-timer">Close</button>
+                         
+                </div>
+            </div>
+        </section>
+
+        <!--Schedule Section-->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Weekly Workout Schedule</h2>
+                <div class="schedule-container">
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Monday - Upper Body</h3>
+                            <input type="checkbox" id="mon-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Push-ups: 3x12</li>
+                                <li>Plank: 3x45sec</li>
+                                <li>Pike Push-ups: 3x8</li>
+                                <li>Wall Handstand: 3x30sec</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Tuesday - Lower Body</h3>
+                            <input type="checkbox" id="tue-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Squats: 3x15</li>
+                                <li>Lunges: 3x10 each leg</li>
+                                <li>Single-leg Glute Bridges: 3x12</li>
+                                <li>Calf Raises: 3x20</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Wednesday - Cardio</h3>
+                            <input type="checkbox" id="wed-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Burpees: 3x8</li>
+                                <li>Mountain Climbers: 3x20</li>
+                                <li>High Knees: 3x30sec</li>
+                                <li>Jumping Jacks: 3x25</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Thursday - Core</h3>
+                            <input type="checkbox" id="thu-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Plank: 3x60sec</li>
+                                <li>Russian Twists: 3x20</li>
+                                <li>Bicycle Crunches: 3x15 each</li>
+                                <li>Dead Bug: 3x10 each</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Friday - Full Body</h3>
+                            <input type="checkbox" id="fri-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Burpees: 3x6</li>
+                                <li>Push-ups: 3x10</li>
+                                <li>Squats: 3x12</li>
+                                <li>Plank: 3x45sec</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Saturday - Active Recovery</h3>
+                            <input type="checkbox" id="sat-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Light stretching: 15min</li>
+                                <li>Walk or gentle movement</li>
+                                <li>Breathing exercises</li>
+                                <li>Foam rolling (if available)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-day">
+                        <div class="day-header">
+                            <h3>Sunday - Rest Day</h3>
+                            <input type="checkbox" id="sun-check" class="day-checkbox">
+                        </div>
+                        <div class="day-content">
+                            <ul>
+                                <li>Complete rest</li>
+                                <li>Gentle stretching if desired</li>
+                                <li>Meal prep for the week</li>
+                                <li>Plan next week's goals</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section id="tips" class="section">
+            <div class="container">
+                <h2 class="section-title">Fitness Tips & Guidelines</h2>
+                <div class="tips-grid">
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">💧</div>
+                        <h3>Stay Hydrated</h3>
+                        <p>Drink water before, during, and after workouts. Aim for 8-10 glasses daily. Proper hydration improves performance and recovery.</p>
+                    </div>
+                    
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">🧘</div>
+                        <h3>Warm-Up & Cool Down</h3>
+                        <p>Always start with 5-10 minutes of light movement and end with stretching. This prevents injury and improves flexibility.</p>
+                    </div>
+                    
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">😴</div>
+                        <h3>Prioritize Recovery</h3>
+                        <p>Get 7-9 hours of quality sleep. Your muscles grow and repair during rest, making sleep crucial for fitness progress.</p>
+                    </div>
+                    
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">🥗</div>
+                        <h3>Fuel Your Body</h3>
+                        <p>Eat a balanced diet with lean proteins, complex carbs, and healthy fats. Proper nutrition supports your fitness goals.</p>
+                    </div>
+                    
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">📈</div>
+                        <h3>Progressive Overload</h3>
+                        <p>Gradually increase intensity, duration, or difficulty. Small, consistent improvements lead to significant results over time.</p>
+                    </div>
+                    
+                    <div class="tip-card fade-in">
+                        <div class="tip-icon">🎯</div>
+                        <h3>Listen to Your Body</h3>
+                        <p>Pay attention to how you feel. Rest when needed, push when you can. Consistency beats intensity every time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Ready to Start Your Fitness Journey?</h3>
+                        <p>Have questions about workouts, need personalized advice, or want to share your progress? We'd love to hear from you!</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <span class="contact-icon">📧</span>
+                                <span>taniskbca2022@ismpatna.ac.in</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📱</span>
+                                <span>+91 6201704109</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">🕒</span>
+                                <span>Mon-Fri: 9AM-6PM EST</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" action="/email_send" method="POST" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                            <span class="error-message" id="message-error"></span>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        <div class="form-success" id="form-success">Message sent successfully! We'll get back to you soon.</div>
+                    </form>
+                </div>
+            </div>
+        </section>
+<!-- Testimonials Carousel -->
+<div class="testimonial-carousel">
+    <h3 class="testimonial-heading">What Our Users Say</h3>
+    <div class="testimonial-box">
+        <div class="testimonial-card active">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560" alt="Sarah Chen">
+            <blockquote>"The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for."</blockquote>
+            <p class="testimonial-name">Sarah Chen</p>
+            <p class="testimonial-role">Product Manager at TechFlow</p>
+        </div>
+
+        <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540" alt="Michael Rodriguez">
+            <blockquote>"Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable."</blockquote>
+            <p class="testimonial-name">Michael Rodriguez</p>
+            <p class="testimonial-role">CTO at InnovateSphere</p>
+        </div>
+
+        <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540" alt="Emily Watson">
+            <blockquote>"This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple."</blockquote>
+            <p class="testimonial-name">Emily Watson</p>
+            <p class="testimonial-role">Operations Director at CloudScale</p>
+        </div>
+
+        <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464" alt="James Kim">
+            <blockquote>"Outstanding support and robust features. It's rare to find a product that delivers on all its promises."</blockquote>
+            <p class="testimonial-name">James Kim</p>
+            <p class="testimonial-role">Engineering Lead at DataPro</p>
+        </div>
+
+        <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592" alt="Lisa Thompson">
+            <blockquote>"The scalability and performance have been game-changing for our organization. Highly recommend to any growing business."</blockquote>
+            <p class="testimonial-name">Lisa Thompson</p>
+            <p class="testimonial-role">VP of Technology at FutureNet</p>
+        </div>
+    </div>
+
+    <div class="testimonial-controls">
+        <button class="arrow-btn" id="prevBtn">⟨</button>
+        <button class="arrow-btn" id="nextBtn">⟩</button>
+    </div>
+</div>
+
+    </main>
+
+    <script src="{{url_for('static',filename='script.js')}}">
+</script>
+
+  
+</body>
+</html>

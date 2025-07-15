@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrainWithUs</title>
+    <!-- <title>TrainWithUs - Weekly Workout Schedule</title> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            color: #1f2937;
+        }
+
+        body.dark {
+            background-color: #1a1a1a;
+            color: #f9fafb;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        body.dark .navbar {
+            background-color: #2d2d2d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6366f1;
+            transition: color 0.3s ease;
+        }
+
+        .logo::before {
+            content: "💪";
+            margin-right: 0.5rem;
+        }
+
+        body.dark .logo {
+            color: #818cf8;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        body.dark .nav-links a {
+            color: #9ca3af;
+        }
+
+        body.dark .nav-links a:hover {
+            background-color: #374151;
+            color: #e5e7eb;
+        }
+
+        .nav-links a.active {
+            background-color: #6366f1;
+            color: white;
+            border: 1px solid #6366f1;
+        }
+
+        body.dark .nav-links a.active {
+            background-color: #818cf8;
+            border: 1px solid #818cf8;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid #6b7280;
+            color: #6b7280;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            font-size: 1rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: #f3f4f6;
+            transform: scale(1.1);
+        }
+
+        body.dark .theme-toggle {
+            border-color: #9ca3af;
+            color: #9ca3af;
+        }
+
+        body.dark .theme-toggle:hover {
+            background-color: #374151;
+        }
+
+        .login-btn {
+            background-color: #6366f1;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #5b21b6;
+            transform: translateY(-1px);
+        }
+
+        body.dark .login-btn {
+            background-color: #818cf8;
+        }
+
+        body.dark .login-btn:hover {
+            background-color: #6366f1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 3rem;
+            transition: color 0.3s ease;
+        }
+
+        body.dark .title {
+            color: #f9fafb;
+        }
+
+        .workout-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark .workout-card {
+            background: linear-gradient(135deg, #4c63d2 0%, #5a3f7c 100%);
+        }
+
+        .workout-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
+        }
+
+        body.dark .workout-card:hover {
+            box-shadow: 0 8px 25px rgba(76, 99, 210, 0.25);
+        }
+
+        .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .workout-day {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .completion-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .completion-badge.show {
+            opacity: 1;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-list {
+            display: none;
+            margin-top: 1rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .exercise-list.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .exercise-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .exercise-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .exercise-checkbox {
+            margin-right: 1rem;
+            width: 18px;
+            height: 18px;
+            accent-color: #4ade80;
+            cursor: pointer;
+        }
+
+        .exercise-text {
+            color: white;
+            font-size: 0.95rem;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-text.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .submit-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn:disabled {
+            background: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        body.dark .submit-btn {
+            color: #4c63d2;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+
+            .workout-card {
+                padding: 1.5rem;
+            }
+
+            .workout-day {
+                font-size: 1.2rem;
+            }
+
+            .toggle-icon {
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+
+        /* Smooth transitions for theme switching */
+        *, *::before, *::after {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">TrainWithUs</div>
+        <ul class="nav-links">
+            <li><a href="/#home">Home</a></li>
+            
+            <li>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </li>
+        </ul>
+     
+    </nav>
+
+    <div class="container" id="schedule" >
+        <h1 class="title">Weekly Workout Schedule</h1>
+        
+        <div class="workout-card" data-day="monday">
+            <div class="workout-header">
+                <div class="workout-day">Monday - Chest Day</div>
+                <div class="completion-badge" id="badge-monday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-monday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="0">
+                    <span class="exercise-text">Push-ups (3 sets of 10-15)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="1">
+                    <span class="exercise-text">Wide-grip Push-ups (3 sets of 8-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="2">
+                    <span class="exercise-text">Diamond Push-ups (3 sets of 6-10)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="3">
+                    <span class="exercise-text">Incline Push-ups (3 sets of 10-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="4">
+                    <span class="exercise-text">Decline Push-ups (3 sets of 8-10)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="monday" data-exercise="5">
+                    <span class="exercise-text">Chest Dips (3 sets of 8-12)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-monday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('monday')">Submit Monday's Workout</button>
+            </div>
+        </div>
+
+        <div class="workout-card" data-day="tuesday">
+            <div class="workout-header">
+                <div class="workout-day">Tuesday - Back Day</div>
+                <div class="completion-badge" id="badge-tuesday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-tuesday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="0">
+                    <span class="exercise-text">Pull-ups (3 sets of 5-10)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="1">
+                    <span class="exercise-text">Superman (3 sets of 12-15)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="2">
+                    <span class="exercise-text">Reverse Snow Angels (3 sets of 10-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="3">
+                    <span class="exercise-text">Bridge (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="4">
+                    <span class="exercise-text">Prone Y-T-W (3 sets of 8-10)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="tuesday" data-exercise="5">
+                    <span class="exercise-text">Good Mornings (3 sets of 10-12)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-tuesday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('tuesday')">Submit Tuesday's Workout</button>
+            </div>
+        </div>
+
+        <div class="workout-card" data-day="wednesday">
+            <div class="workout-header">
+                <div class="workout-day">Wednesday - Leg Day</div>
+                <div class="completion-badge" id="badge-wednesday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-wednesday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="0">
+                    <span class="exercise-text">Squats (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="1">
+                    <span class="exercise-text">Lunges (3 sets of 10-12 each leg)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="2">
+                    <span class="exercise-text">Calf Raises (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="3">
+                    <span class="exercise-text">Wall Sit (3 sets of 30-60 seconds)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="4">
+                    <span class="exercise-text">Single-leg Glute Bridge (3 sets of 8-10 each)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="wednesday" data-exercise="5">
+                    <span class="exercise-text">Jump Squats (3 sets of 10-15)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-wednesday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('wednesday')">Submit Wednesday's Workout</button>
+            </div>
+        </div>
+
+        <div class="workout-card" data-day="thursday">
+            <div class="workout-header">
+                <div class="workout-day">Thursday - Biceps, Triceps & Forearms</div>
+                <div class="completion-badge" id="badge-thursday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-thursday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="0">
+                    <span class="exercise-text">Pike Push-ups (3 sets of 8-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="1">
+                    <span class="exercise-text">Tricep Dips (3 sets of 10-15)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="2">
+                    <span class="exercise-text">Isometric Bicep Hold (3 sets of 20-30 seconds)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="3">
+                    <span class="exercise-text">Wrist Curls (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="4">
+                    <span class="exercise-text">Reverse Wrist Curls (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="thursday" data-exercise="5">
+                    <span class="exercise-text">Plank to Push-up (3 sets of 8-10)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-thursday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('thursday')">Submit Thursday's Workout</button>
+            </div>
+        </div>
+
+        <div class="workout-card" data-day="friday">
+            <div class="workout-header">
+                <div class="workout-day">Friday - Shoulder Day</div>
+                <div class="completion-badge" id="badge-friday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-friday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="0">
+                    <span class="exercise-text">Pike Push-ups (3 sets of 8-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="1">
+                    <span class="exercise-text">Arm Circles (3 sets of 15 each direction)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="2">
+                    <span class="exercise-text">Wall Handstand Hold (3 sets of 15-30 seconds)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="3">
+                    <span class="exercise-text">Lateral Raises (bodyweight) (3 sets of 12-15)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="4">
+                    <span class="exercise-text">Front Raises (bodyweight) (3 sets of 10-12)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="friday" data-exercise="5">
+                    <span class="exercise-text">Shoulder Shrugs (3 sets of 15-20)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-friday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('friday')">Submit Friday's Workout</button>
+            </div>
+        </div>
+
+        <div class="workout-card" data-day="saturday">
+            <div class="workout-header">
+                <div class="workout-day">Saturday - Abs Day</div>
+                <div class="completion-badge" id="badge-saturday">Completed ✓</div>
+            </div>
+            <div class="toggle-icon">⬜</div>
+            <div class="exercise-list" id="exercises-saturday">
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="0">
+                    <span class="exercise-text">Crunches (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="1">
+                    <span class="exercise-text">Plank (3 sets of 30-60 seconds)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="2">
+                    <span class="exercise-text">Bicycle Crunches (3 sets of 20-30)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="3">
+                    <span class="exercise-text">Russian Twists (3 sets of 15-20)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="4">
+                    <span class="exercise-text">Mountain Climbers (3 sets of 20-30)</span>
+                </div>
+                <div class="exercise-item">
+                    <input type="checkbox" class="exercise-checkbox" data-day="saturday" data-exercise="5">
+                    <span class="exercise-text">Leg Raises (3 sets of 10-15)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-saturday" style="width: 0%"></div>
+                </div>
+                <button class="submit-btn" onclick="submitDay('saturday')">Submit Saturday's Workout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let completedExercises = {};
+        let submittedDays = {};
+
+        // Theme toggle functionality with localStorage persistence
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                themeIcon.textContent = '☀️';
+                // Store theme preference (Note: localStorage not available in Claude artifacts)
+            } else {
+                themeIcon.textContent = '🌙';
+                // Store theme preference (Note: localStorage not available in Claude artifacts)
+            }
+            
+            // Add a subtle animation to the toggle
+            themeIcon.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                themeIcon.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        // Initialize theme on page load
+        function initializeTheme() {
+            const themeIcon = document.getElementById('theme-icon');
+            // In a real environment, you would check localStorage here
+            // For demo purposes, we'll start in light mode
+            themeIcon.textContent = '🌙';
+        }
+
+        // Workout card toggle functionality
+        document.querySelectorAll('.workout-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.type === 'checkbox' || e.target.classList.contains('submit-btn')) {
+                    return;
+                }
+                
+                const day = card.dataset.day;
+                const exerciseList = document.getElementById(`exercises-${day}`);
+                const toggleIcon = card.querySelector('.toggle-icon');
+                
+                exerciseList.classList.toggle('active');
+                
+                if (exerciseList.classList.contains('active')) {
+                    toggleIcon.textContent = '🔽';
+                    toggleIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    toggleIcon.textContent = '⬜';
+                    toggleIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Exercise checkbox functionality
+        document.querySelectorAll('.exercise-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const day = e.target.dataset.day;
+                const exerciseIndex = e.target.dataset.exercise;
+                const exerciseText = e.target.nextElementSibling;
+                const exerciseItem = e.target.closest('.exercise-item');
+                
+                if (!completedExercises[day]) {
+                    completedExercises[day] = {};
+                }
+                
+                completedExercises[day][exerciseIndex] = e.target.checked;
+                
+                if (e.target.checked) {
+                    exerciseText.classList.add('completed');
+                    exerciseItem.style.background = 'rgba(74, 222, 128, 0.2)';
+                    exerciseItem.style.borderColor = 'rgba(74, 222, 128, 0.4)';
+                } else {
+                    exerciseText.classList.remove('completed');
+                    exerciseItem.style.background = 'rgba(255, 255, 255, 0.1)';
+                    exerciseItem.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }
+                
+                updateProgress(day);
+            });
+        });
+
+        function updateProgress(day) {
+            const checkboxes = document.querySelectorAll(`[data-day="${day}"]`);
+            const completedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const totalCount = checkboxes.length;
+            const percentage = (completedCount / totalCount) * 100;
+            
+            const progressBar = document.getElementById(`progress-${day}`);
+            progressBar.style.width = `${percentage}%`;
+            
+            // Add visual feedback for progress
+            if (percentage === 100) {
+                progressBar.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
+            } else if (percentage >= 50) {
+                progressBar.style.background = 'linear-gradient(90deg, #eab308, #f59e0b)';
+            } else {
+                progressBar.style.background = 'linear-gradient(90deg, #4ade80, #22c55e)';
+            }
+        }
+
+        function submitDay(day) {
+            const checkboxes = document.querySelectorAll(`[data-day="${day}"]`);
+            const completedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            if (completedCount === 0) {
+                alert('Please complete at least one exercise before submitting!');
+                return;
+            }
+            
+            submittedDays[day] = true;
+            const badge = document.getElementById(`badge-${day}`);
+            badge.classList.add('show');
+            
+            const submitBtn = document.querySelector(`[onclick="submitDay('${day}')"]`);
+            submitBtn.textContent = 'Workout Submitted! 🎉';
+            submitBtn.disabled = true;
+            
+            alert(`Great job! You've completed your ${day} workout!`);
+        }
+
+        // Initialize progress bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            days.forEach(day => {
+                updateProgress(day);
+            });
+        });
+        
+document.addEventListener("DOMContentLoaded", function () {
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === "#" || href.includes("#home") || href === "/" || href === "index.html") return;
+
+    link.addEventListener("click", function (e) {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      if (!isLoggedIn) {
+        e.preventDefault();
+        alert("You have to log in first.");
+        openLoginModal(); // Call your modal show function
+      }
+    });
+  });
+});
+
+// Example login modal show function
+function openLoginModal() {
+  const modal = document.getElementById("loginModal");
+  if (modal) {
+    modal.style.display = "block";
+  }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const protectedLinks = document.querySelectorAll("a.protected");
+
+  protectedLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn !== "true") {
+        e.preventDefault();
+        alert("🚫 Please log in to access this section.");
+        window.location.href = "/login";
+      }
+    });
+  });
+});
+
+    </script>
+</body>
+</html>
